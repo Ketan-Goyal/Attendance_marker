@@ -55,5 +55,23 @@
       });
     });
   </script>
+  <script type="module">
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDFXJPs1Wzwm8nJt4pmIA0xI4oIK61N-js",
+        authDomain: "attandance-app-1adf8.firebaseapp.com",
+        projectId: "attandance-app-1adf8",
+        storageBucket: "attandance-app-1adf8.appspot.com",
+        messagingSenderId: "134561835321",
+        appId: "1:134561835321:web:335a9ad50e9349e3cb60e8",
+        measurementId: "G-FL22MQHC02"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
 </body>
 </html>

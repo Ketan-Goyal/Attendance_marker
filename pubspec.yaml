@@ -35,7 +35,10 @@ dependencies:
   firebase_core: ^2.14.0
   another_flushbar: ^1.12.30
   slide_to_act: any
-  font_awesome_flutter: ^10.4.0
+  cloud_firestore: ^4.8.1
+  firebase_storage: any
+  shared_preferences: ^2.1.2
+
 
 
 dev_dependencies:

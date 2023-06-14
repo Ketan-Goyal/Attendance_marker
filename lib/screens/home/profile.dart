@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class Profile_page extends StatefulWidget {
   const Profile_page({super.key});
 
@@ -9,6 +10,10 @@ class Profile_page extends StatefulWidget {
 class _Profile_pageState extends State<Profile_page> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      child: Center(
+        child: Text("Profile"),
+      ),
+    );
   }
 }

@@ -2,7 +2,6 @@ import 'package:attandance_marker/screens/home/Calender.dart';
 import 'package:attandance_marker/screens/home/profile.dart';
 import 'package:attandance_marker/screens/home/today.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -55,20 +54,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 for (int i = 0; i < navigationIcons.length; i++) ...<Expanded>{
                   Expanded(
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          currentIndex=i;
+                          currentIndex = i;
                         });
                       },
                       child: Container(
-                        height:height,
+                        height: height,
                         width: width,
                         color: Colors.white,
                         child: Center(
                           child: Icon(
                             navigationIcons[i],
-                            color: i==currentIndex?Colors.redAccent.shade200:Colors.black54,
-                            size: i==currentIndex?32:24,
+                            color: i == currentIndex
+                                ? Colors.redAccent.shade200
+                                : Colors.black54,
+                            size: i == currentIndex ? 32 : 24,
                           ),
                         ),
                       ),
