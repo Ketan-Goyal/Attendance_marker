@@ -1,9 +1,11 @@
+import 'package:attandance_marker/models/user_model.dart';
 import 'package:attandance_marker/screens/att_page.dart';
 import 'package:attandance_marker/screens/auth/login_screen.dart';
 import 'package:attandance_marker/screens/home/home_screen.dart';
 import 'package:attandance_marker/screens/home/today.dart';
 import 'package:attandance_marker/screens/mobile_screen.dart';
 import 'package:attandance_marker/screens/web_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,6 +66,7 @@ class _AuthCheckState extends State<AuthCheck> {
     try {
       if (sharedPreferences.getString('employeeId') != null) {
         setState(() {
+          UserModel.uid = sharedPreferences.getString('employeeId')!;
           userAvailable = true;
         });
       }

@@ -38,6 +38,7 @@ dependencies:
   cloud_firestore: ^4.8.1
   firebase_storage: any
   shared_preferences: ^2.1.2
+  intl: ^0.18.1
 
 
 
