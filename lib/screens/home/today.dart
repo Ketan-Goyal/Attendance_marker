@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:attandance_marker/models/user_model.dart';
 import 'package:attandance_marker/services/location_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:haversine_distance/haversine_distance.dart';
 import 'package:intl/intl.dart';
 import 'package:slide_to_act/slide_to_act.dart';
@@ -268,8 +266,9 @@ class _TodayScreenState extends State<TodayScreen> {
                                     .doc(DateFormat('dd-MMM-yyyy')
                                         .format(DateTime.now()))
                                     .set({
-                                  'checkin':
-                                      DateFormat('hh:mm').format(DateTime.now())
+                                  'checkin': DateFormat('hh:mm a')
+                                      .format(DateTime.now()),
+                                  'chechout': "--/--"
                                 });
                               }
                             } else {
@@ -297,9 +296,9 @@ class _TodayScreenState extends State<TodayScreen> {
                     margin: EdgeInsets.only(top: height / 10),
                     child: Center(
                       child: Text(
-                        "You have Checked Out for the Day\nTHANKS!",
-                        style: TextStyle(
-                            fontSize: width / 20, color: Colors.black45),
+                        "You have Checked Out for the Day\nTime spent "
+                        "today=",
+                        style: TextStyle(fontSize: width / 20),
                       ),
                     ),
                   ),

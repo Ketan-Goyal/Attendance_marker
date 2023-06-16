@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -31,8 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Login",
+                  "Welcome",
                   style: TextStyle(fontSize: 25),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(
                   height: 40,
@@ -51,9 +53,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
+                const SizedBox(height: 30),
+                GestureDetector(
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text("Login"),
+                  ),
+                  onTap: () async {
                     String id = usernameController.text.trim();
 
                     String password = passwordController.text.trim();
@@ -70,9 +82,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           .where('ID', isEqualTo: id)
                           .get();
                       try {
-                        if (password == snap.docs[0]['Password']) {
+                        if (password == snap.docs[0]['Password'] &&
+                            snap.docs[0]['logged'] == false) {
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(snap.docs[0].id)
+                              .update({
+                            'logged': true,
+                          });
                           sharedPreference =
                               await SharedPreferences.getInstance();
+
                           sharedPreference
                               .setString('employeeId', id)
                               .then((_) {
@@ -84,7 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("Wrong Password!!!"),
+                              content: Text("Wrong Password!! or you are "
+                                  "logged in already"),
                             ),
                           );
                         }
@@ -104,7 +125,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   print("cought exception");
                     // }
                   },
-                  child: const Text("Login"),
                 ),
                 // const SizedBox(height: 20),
                 // TextButton(
