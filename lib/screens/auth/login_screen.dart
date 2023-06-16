@@ -1,5 +1,4 @@
 import 'package:attandance_marker/constants.dart';
-import 'package:attandance_marker/screens/auth/signup_screen.dart';
 import 'package:attandance_marker/widgets/input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    fillColor: Colors.grey.shade100,
                     filled: true,
                     hintText: "Password",
                     border: OutlineInputBorder(
@@ -108,13 +106,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: const Text("Login"),
                 ),
-                const SizedBox(height: 20),
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => SignupScreen()));
-                    },
-                    child: Text("New User? SIGN UP"))
+                // const SizedBox(height: 20),
+                // TextButton(
+                //     onPressed: () {
+                //       Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //           builder: (context) => SignupScreen()));
+                //     },
+                //     child: Text("New User? SIGN UP"))
               ],
             ),
           ),

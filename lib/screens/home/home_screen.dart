@@ -11,10 +11,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 1;
+  int currentIndex = 0;
 
   List<IconData> navigationIcons = [
-    Icons.calendar_today,
     Icons.checklist,
     Icons.person,
   ];
@@ -23,11 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-        backgroundColor: Colors.white,
         body: IndexedStack(
           index: currentIndex,
           children: [
-            Calender_screen(),
             TodayScreen(),
             Profile_page(),
           ],
@@ -36,11 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
           margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           height: height / 12,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(20),
               boxShadow: const [
                 BoxShadow(
-                  color: Colors.black54,
+                  color: Colors.white54,
                   blurRadius: 10,
                   offset: Offset(2, 2),
                 ),
@@ -62,13 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Container(
                         height: height,
                         width: width,
-                        color: Colors.white,
                         child: Center(
                           child: Icon(
                             navigationIcons[i],
                             color: i == currentIndex
-                                ? Colors.redAccent.shade200
-                                : Colors.black54,
+                                ? Colors.white
+                                : Colors.white38,
                             size: i == currentIndex ? 32 : 24,
                           ),
                         ),

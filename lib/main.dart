@@ -1,4 +1,5 @@
 import 'package:attandance_marker/models/user_model.dart';
+import 'package:attandance_marker/screens/Testing/Location_screen.dart';
 import 'package:attandance_marker/screens/att_page.dart';
 import 'package:attandance_marker/screens/auth/login_screen.dart';
 import 'package:attandance_marker/screens/home/home_screen.dart';
@@ -33,11 +34,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)
-            .copyWith(secondary: Colors.redAccent.shade200),
+        colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: Colors.grey, brightness: Brightness.dark)
+            .copyWith(secondary: Colors.grey.shade500),
         // iconTheme: IconThemeData(color: Colors.redAccent.shade200),
         useMaterial3: true,
       ),
+      // home: LocationScreen(),
       home: AuthCheck(),
     );
   }

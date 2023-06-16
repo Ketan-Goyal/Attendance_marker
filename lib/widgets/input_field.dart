@@ -16,7 +16,7 @@ class _InputTextState extends State<InputText> {
     return TextFormField(
       controller: widget.controller,
       decoration: InputDecoration(
-          fillColor: Colors.grey.shade100,
+          // fillColor: Colors.grey.shade100,
           filled: true,
           hintText: widget.hintText,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
