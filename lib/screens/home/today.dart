@@ -17,6 +17,8 @@ class TodayScreen extends StatefulWidget {
 class _TodayScreenState extends State<TodayScreen> {
   String Checkin = "--/--";
   String Checkout = "--/--";
+  String CheckinT = "";
+  String CheckoutT = "";
 
   double OLongitude = 0;
   double OLatitude = 0;
@@ -26,7 +28,21 @@ class _TodayScreenState extends State<TodayScreen> {
   @override
   void initState() {
     super.initState();
+    _userDetails();
     _getRecord();
+  }
+
+  void _userDetails() async {
+    QuerySnapshot snap = await FirebaseFirestore.instance
+        .collection("users")
+        .where('ID', isEqualTo: UserModel.uid)
+        .get();
+    UserModel.name = snap.docs[0]['username'];
+    UserModel.email = snap.docs[0]['email'];
+
+    OLatitude = snap.docs[0]['Latitude'];
+    print(OLongitude);
+    OLongitude = snap.docs[0]['Longitude'];
   }
 
   void _getRecord() async {
@@ -37,9 +53,7 @@ class _TodayScreenState extends State<TodayScreen> {
           .get();
 
       //take the user's office location
-      OLatitude = snap.docs[0]['Latitude'];
-      print(OLongitude);
-      OLongitude = snap.docs[0]['Longitude'];
+
       DocumentSnapshot snap2 = await FirebaseFirestore.instance
           .collection("users")
           .doc(snap.docs[0].id)
@@ -50,17 +64,11 @@ class _TodayScreenState extends State<TodayScreen> {
       setState(() {
         Checkin = snap2['checkin'];
         Checkout = snap2['checkout'];
+        CheckinT = snap2['checkinT'];
+        CheckoutT = snap2['checkoutT'];
       });
     } catch (e) {
-      QuerySnapshot snap = await FirebaseFirestore.instance
-          .collection("users")
-          .where('ID', isEqualTo: UserModel.uid)
-          .get();
-
-      //take the user's office location
-      OLatitude = snap.docs[0]['Latitude'];
-      print(OLongitude);
-      OLongitude = snap.docs[0]['Longitude'];
+      print(e);
       setState(() {
         Checkin = "--/--";
         Checkout = "--/--";
@@ -81,28 +89,28 @@ class _TodayScreenState extends State<TodayScreen> {
               decoration: BoxDecoration(
                   // color: Colors.redAccent.shade200,
                   color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20))),
               child: Container(
                 margin: EdgeInsets.only(top: 6, left: 10),
+                alignment: Alignment.centerLeft,
                 child: Text(
-                  " Welcome " + UserModel.uid,
-                  style: TextStyle(
+                  " Welcome " + UserModel.name,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 30,
                   ),
                 ),
-                alignment: Alignment.centerLeft,
               ),
             ),
             Container(
               margin: EdgeInsets.only(left: width / 18, top: 10),
-              child: Text(" Today's Status",
+              alignment: Alignment.centerLeft,
+              child: const Text(" Today's Status",
                   style: TextStyle(
                     fontSize: 20,
                   )),
-              alignment: Alignment.centerLeft,
             ),
             Container(
               margin:
@@ -200,9 +208,14 @@ class _TodayScreenState extends State<TodayScreen> {
                           return Theme.of(context).primaryColor;
                         })),
                         child: Checkin == "--/--"
-                            ? Text("Clock in")
-                            : Text("clock "
-                                "out"),
+                            ? Text(
+                                "Clock In",
+                                style: TextStyle(fontSize: 20),
+                              )
+                            : Text(
+                                "Clock Out",
+                                style: TextStyle(fontSize: 20),
+                              ),
                         onPressed: () async {
                           await LocServ.getCurrentLocation();
                           UserModel.latitude = LocServ.latitude;
@@ -247,16 +260,23 @@ class _TodayScreenState extends State<TodayScreen> {
                                         .format(DateTime.now()))
                                     .set({
                                   'checkin': CheckIN,
-                                  'checkout':
-                                      DateFormat('hh:mm').format(DateTime.now())
+                                  'checkinT': CheckinT,
+                                  'checkout': DateFormat('hh:mm a')
+                                      .format(DateTime.now()),
+                                  'checkoutT': DateFormat('yyyy-MM-dd hh:mm:ss')
+                                      .format(DateTime.now())
                                 });
                                 setState(() {
-                                  Checkout = DateFormat('hh:mm')
+                                  Checkout = DateFormat('hh:mm a')
+                                      .format(DateTime.now());
+                                  CheckoutT = DateFormat('yyyy-MM-dd hh:mm:ss')
                                       .format(DateTime.now());
                                 });
                               } catch (e) {
                                 setState(() {
-                                  Checkin = DateFormat('hh:mm')
+                                  Checkin = DateFormat('hh:mm a')
+                                      .format(DateTime.now());
+                                  CheckinT = DateFormat('yyyy-MM-dd hh:mm:ss')
                                       .format(DateTime.now());
                                 });
                                 await FirebaseFirestore.instance
@@ -268,7 +288,10 @@ class _TodayScreenState extends State<TodayScreen> {
                                     .set({
                                   'checkin': DateFormat('hh:mm a')
                                       .format(DateTime.now()),
-                                  'chechout': "--/--"
+                                  'checkout': "--/--",
+                                  'checkinT': DateFormat('yyyy-MM-dd hh:mm:ss')
+                                      .format(DateTime.now()),
+                                  'checkoutT': "--/--",
                                 });
                               }
                             } else {
@@ -296,9 +319,10 @@ class _TodayScreenState extends State<TodayScreen> {
                     margin: EdgeInsets.only(top: height / 10),
                     child: Center(
                       child: Text(
-                        "You have Checked Out for the Day\nTime spent "
-                        "today=",
-                        style: TextStyle(fontSize: width / 20),
+                        "You have Checked Out for the Day\nYou have Spent "
+                        "${DateTime.parse(CheckoutT).difference(DateTime.parse(CheckinT)).inMinutes} mins today",
+                        style: TextStyle(fontSize: 30),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),

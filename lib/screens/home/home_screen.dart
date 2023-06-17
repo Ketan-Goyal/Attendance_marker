@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: i == currentIndex
                                 ? Colors.white
                                 : Colors.white38,
-                            size: i == currentIndex ? 32 : 24,
+                            size: i == currentIndex ? 35 : 24,
                           ),
                         ),
                       ),

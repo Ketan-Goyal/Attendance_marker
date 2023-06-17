@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/user_model.dart';
 import '../home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Welcome",
                   style: TextStyle(fontSize: 25),
                   textAlign: TextAlign.center,
@@ -66,11 +67,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text("Login"),
                   ),
                   onTap: () async {
-                    String id = usernameController.text.trim();
+                    UserModel.uid = usernameController.text.trim();
 
                     String password = passwordController.text.trim();
 
-                    if (id.isEmpty || password.isEmpty) {
+                    if (UserModel.uid.isEmpty || password.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Please Enter Valid Details"),
@@ -79,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     } else {
                       QuerySnapshot snap = await FirebaseFirestore.instance
                           .collection("users")
-                          .where('ID', isEqualTo: id)
+                          .where('ID', isEqualTo: UserModel.uid)
                           .get();
                       try {
                         if (password == snap.docs[0]['Password'] &&
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               await SharedPreferences.getInstance();
 
                           sharedPreference
-                              .setString('employeeId', id)
+                              .setString('employeeId', UserModel.uid)
                               .then((_) {
                             Navigator.pushReplacement(
                                 context,
