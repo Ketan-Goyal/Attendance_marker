@@ -316,7 +316,7 @@ class _TodayScreenState extends State<TodayScreen> {
                   )
                 : Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: height / 10),
+                    margin: EdgeInsets.symmetric(vertical: height / 10),
                     child: Center(
                       child: Text(
                         "You have Checked Out for the Day\nYou have Spent "

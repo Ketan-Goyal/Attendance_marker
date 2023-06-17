@@ -46,8 +46,8 @@ class _Profile_pageState extends State<Profile_page> {
             ),
           ),
           Divider(
-            indent: width / 10,
-            endIndent: width / 10,
+            indent: width / 8,
+            endIndent: width / 8,
             color: Colors.grey.shade800,
           ),
           Container(
@@ -56,13 +56,14 @@ class _Profile_pageState extends State<Profile_page> {
             child: Text(
               "Email - ${UserModel.email}",
               style: TextStyle(
-                fontSize: width / 20,
+                fontSize: height / 30,
+                color: Colors.white70,
               ),
             ),
           ),
           Divider(
-            indent: width / 10,
-            endIndent: width / 10,
+            indent: width / 8,
+            endIndent: width / 8,
             color: Colors.grey.shade800,
           ),
           Container(
@@ -71,13 +72,14 @@ class _Profile_pageState extends State<Profile_page> {
             child: Text(
               "ID - ${UserModel.uid}",
               style: TextStyle(
-                fontSize: width / 20,
+                fontSize: height / 30,
+                color: Colors.white70,
               ),
             ),
           ),
           Divider(
-            indent: width / 10,
-            endIndent: width / 10,
+            indent: width / 8,
+            endIndent: width / 8,
             color: Colors.grey.shade800,
           ),
           Container(
