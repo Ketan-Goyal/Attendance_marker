@@ -1,4 +1,4 @@
-# attandance_marker
+# attendance_marker
 
 A new Flutter project.
 
