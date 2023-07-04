@@ -83,7 +83,9 @@ class _Profile_pageState extends State<Profile_page> {
             color: Colors.grey.shade800,
           ),
           Container(
+            alignment: Alignment.center,
             height: height / 10,
+            child: Text('v1.0.0'),
           ),
         ],
       ),

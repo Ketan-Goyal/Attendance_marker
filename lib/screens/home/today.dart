@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:attandance_marker/models/user_model.dart';
-import 'package:attandance_marker/services/location_services.dart';
+import 'package:attendance_marker/models/user_model.dart';
+import 'package:attendance_marker/services/location_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:haversine_distance/haversine_distance.dart';
@@ -19,6 +19,9 @@ class _TodayScreenState extends State<TodayScreen> {
   String Checkout = "--/--";
   String CheckinT = "";
   String CheckoutT = "";
+  int TDuration = 0;
+  int hh = 0;
+  int mm = 0;
 
   double OLongitude = 0;
   double OLatitude = 0;
@@ -66,9 +69,15 @@ class _TodayScreenState extends State<TodayScreen> {
         Checkout = snap2['checkout'];
         CheckinT = snap2['checkinT'];
         CheckoutT = snap2['checkoutT'];
+
+        if (Checkout != '--/--') {
+          TDuration = snap2['Duration'];
+          hh = (TDuration / 60).floor();
+          mm = TDuration % 60;
+        }
       });
     } catch (e) {
-      print(e);
+      // print(e);
       setState(() {
         Checkin = "--/--";
         Checkout = "--/--";
@@ -96,7 +105,7 @@ class _TodayScreenState extends State<TodayScreen> {
                 margin: EdgeInsets.only(top: 6, left: 10),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  " Welcome " + UserModel.name,
+                  " Welcome ${UserModel.name}",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 30,
@@ -119,7 +128,7 @@ class _TodayScreenState extends State<TodayScreen> {
               decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.white24,
                       blurRadius: 10,
@@ -132,13 +141,13 @@ class _TodayScreenState extends State<TodayScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Clock In",
                           style: TextStyle(fontSize: 20, color: Colors.white54),
                         ),
                         Text(
                           Checkin,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 30, fontFamily: 'TrojanPro_Bold.ttf'),
                         ),
                       ],
@@ -148,7 +157,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Clock Out:",
                         style: TextStyle(
                           fontSize: 20,
@@ -157,7 +166,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       ),
                       Text(
                         Checkout,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 30, fontFamily: 'TrojanPro_Bold.ttf'),
                       ),
                     ],
@@ -172,12 +181,12 @@ class _TodayScreenState extends State<TodayScreen> {
                 builder: (context, snapshot) {
                   return Container(
                     margin: EdgeInsets.only(top: 10),
+                    alignment: Alignment.center,
                     child: Text(DateFormat('hh:mm:ss a').format(DateTime.now()),
                         style: TextStyle(
                             fontSize: width / 15,
                             color: Colors.white,
                             fontWeight: FontWeight.bold)),
-                    alignment: Alignment.center,
                   );
                 }),
             Container(
@@ -191,7 +200,7 @@ class _TodayScreenState extends State<TodayScreen> {
             ),
             Checkout == "--/--"
                 ? Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                         top: 80, left: 20, right: 20, bottom: 10),
                     child: Builder(builder: (context) {
                       final GlobalKey<SlideActionState> key = GlobalKey();
@@ -208,11 +217,11 @@ class _TodayScreenState extends State<TodayScreen> {
                           return Theme.of(context).primaryColor;
                         })),
                         child: Checkin == "--/--"
-                            ? Text(
+                            ? const Text(
                                 "Clock In",
                                 style: TextStyle(fontSize: 20),
                               )
-                            : Text(
+                            : const Text(
                                 "Clock Out",
                                 style: TextStyle(fontSize: 20),
                               ),
@@ -263,20 +272,32 @@ class _TodayScreenState extends State<TodayScreen> {
                                   'checkinT': CheckinT,
                                   'checkout': DateFormat('hh:mm a')
                                       .format(DateTime.now()),
-                                  'checkoutT': DateFormat('yyyy-MM-dd hh:mm:ss')
-                                      .format(DateTime.now())
+                                  'checkoutT': DateFormat('yyyy-MM-dd HH:mm:ss')
+                                      .format(DateTime.now()),
+                                  'Duration': DateTime.parse(
+                                          DateFormat('yyyy-MM-dd HH:mm:ss')
+                                              .format(DateTime.now()))
+                                      .difference(DateTime.parse(CheckinT))
+                                      .inMinutes,
                                 });
                                 setState(() {
                                   Checkout = DateFormat('hh:mm a')
                                       .format(DateTime.now());
-                                  CheckoutT = DateFormat('yyyy-MM-dd hh:mm:ss')
+                                  CheckoutT = DateFormat('yyyy-MM-dd HH:mm:ss')
                                       .format(DateTime.now());
+                                  TDuration = DateTime.parse(
+                                          DateFormat('yyyy-MM-dd HH:mm:ss')
+                                              .format(DateTime.now()))
+                                      .difference(DateTime.parse(CheckinT))
+                                      .inMinutes;
+                                  hh = (TDuration / 60).floor();
+                                  mm = TDuration % 60;
                                 });
                               } catch (e) {
                                 setState(() {
                                   Checkin = DateFormat('hh:mm a')
                                       .format(DateTime.now());
-                                  CheckinT = DateFormat('yyyy-MM-dd hh:mm:ss')
+                                  CheckinT = DateFormat('yyyy-MM-dd HH:mm:ss')
                                       .format(DateTime.now());
                                 });
                                 await FirebaseFirestore.instance
@@ -289,7 +310,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                   'checkin': DateFormat('hh:mm a')
                                       .format(DateTime.now()),
                                   'checkout': "--/--",
-                                  'checkinT': DateFormat('yyyy-MM-dd hh:mm:ss')
+                                  'checkinT': DateFormat('yyyy-MM-dd HH:mm:ss')
                                       .format(DateTime.now()),
                                   'checkoutT': "--/--",
                                 });
@@ -320,8 +341,8 @@ class _TodayScreenState extends State<TodayScreen> {
                     child: Center(
                       child: Text(
                         "You have Checked Out for the Day\nYou have Spent "
-                        "${DateTime.parse(CheckoutT).difference(DateTime.parse(CheckinT)).inMinutes} mins today",
-                        style: TextStyle(fontSize: 30),
+                        "${hh} Hrs and ${mm} Mins today",
+                        style: TextStyle(fontSize: 30, color: Colors.white70),
                         textAlign: TextAlign.center,
                       ),
                     ),

@@ -1,4 +1,4 @@
-import 'package:attandance_marker/services/location_services.dart';
+import 'package:attendance_marker/services/location_services.dart';
 import 'package:flutter/Material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geolocator_web/geolocator_web.dart';

@@ -1,12 +1,8 @@
-import 'package:attandance_marker/models/user_model.dart';
-import 'package:attandance_marker/screens/Testing/Location_screen.dart';
-import 'package:attandance_marker/screens/att_page.dart';
-import 'package:attandance_marker/screens/auth/login_screen.dart';
-import 'package:attandance_marker/screens/home/home_screen.dart';
-import 'package:attandance_marker/screens/home/today.dart';
-import 'package:attandance_marker/screens/mobile_screen.dart';
-import 'package:attandance_marker/screens/web_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:attendance_marker/models/user_model.dart';
+import 'package:attendance_marker/screens/att_page.dart';
+import 'package:attendance_marker/screens/home/home_screen.dart';
+import 'package:attendance_marker/screens/mobile_screen.dart';
+import 'package:attendance_marker/screens/web_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

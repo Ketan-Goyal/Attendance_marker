@@ -1,6 +1,5 @@
-import 'package:attandance_marker/screens/home/Calender.dart';
-import 'package:attandance_marker/screens/home/profile.dart';
-import 'package:attandance_marker/screens/home/today.dart';
+import 'package:attendance_marker/screens/home/profile.dart';
+import 'package:attendance_marker/screens/home/today.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         body: IndexedStack(
           index: currentIndex,
-          children: [
+          children: const [
             TodayScreen(),
             Profile_page(),
           ],
@@ -56,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           currentIndex = i;
                         });
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: height,
                         width: width,
                         child: Center(

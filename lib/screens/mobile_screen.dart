@@ -1,6 +1,6 @@
-import 'package:attandance_marker/screens/auth/login_screen.dart';
-import 'package:attandance_marker/screens/auth/signup_screen.dart';
-import 'package:attandance_marker/widgets/input_field.dart';
+import 'package:attendance_marker/screens/auth/login_screen.dart';
+import 'package:attendance_marker/screens/auth/signup_screen.dart';
+import 'package:attendance_marker/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 
 class MobileScreen extends StatefulWidget {
